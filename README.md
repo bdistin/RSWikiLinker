@@ -37,8 +37,7 @@ The bot only has read message and send message permissions when added - addition
 1.  Download the repository.
 2.  Make sure you have NodeJS and NPM with all of its dependencies installed.
 3.  `npm install`
-4.  Make a `config.json` file; an example is provided. Fill the fields with:
+4.  Make a `config.js` file; an example is provided. Fill the fields with:
   . `token` contains the token of the bot account used.
-  . `admin_snowflake` contains the ID of the admin user. **REQUIRED FOR THE BOT TO START UP.**
-  . `prefix` the prefix to activate commands.
-5.  `node wikilinker.js` to run it!
+  . any other settings you might want
+5.  `node .` to run it!

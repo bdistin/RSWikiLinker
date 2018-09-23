@@ -1,5 +1,4 @@
 .idea/
-node_modules/
-config.json
-db.json
-db.sqlite
+src/bwd/
+node_modules
+src/config.js
