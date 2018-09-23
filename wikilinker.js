@@ -73,15 +73,15 @@ bot.on('message', (msg) => {
 					const removeInlineCode = removeCodeblocks.replace(/`[\S\s]*?`/gm, '');
 					const cleaned = removeInlineCode.replace(/\u200B/g, '');
 
-					if (/\[\[([^\]|]+)(?:|[^\]]+)?\]\]/g.test(cleaned)) {
-						const name = cleaned.replace(/.*?\[\[([^\]|]+)(?:|[^\]]+)?\]\]/g, '$1\u200B');
-						const allLinks = name.split('\u200B').slice(0, -1);
-						const unique = new Set(allLinks);
-
-						unique.forEach((item) => {
-							mps.push(reqAPI(wiki, item.trim()).catch(console.error));
-						});
-					}
+		if (/\[\[([^\]|]+)(?:|[^\]]+)?\]\]/g.test(cleaned)) {
+			const name = cleaned.replace(/.*?\[\[([^\]|]+)(?:|[^\]]+)?\]\]/g, '$1\u200B');
+			const allLinks = name.split('\u200B').slice(0, -1);
+			const unique = new Set(allLinks);
+			console.log(allLinks);
+			unique.forEach((item) => {
+				mps.push(reqAPI(wiki, item.trim()).catch(console.error));
+			});
+		}
 
 					if (/\{\{([^}|]+)(?:|[^}]+)?\}\}/g.test(cleaned)) {
 						const name = cleaned.replace(/.*?\{\{([^}|]+)(?:|[^}]+)?\}\}/g, '$1\u200B');
