@@ -6,6 +6,7 @@ class WikiLinker extends Monitor {
 	constructor(...args) {
 		super(...args, { ignoreOthers: false });
 		this.ignoreEdits = !this.client.options.commandEditing;
+		this.typing = this.client.options.typing;
 	}
 
 	get defaultWikiCommand() {
@@ -20,6 +21,14 @@ class WikiLinker extends Monitor {
 			]);
 		}
 
+		if (this.typing) message.channel.startTyping();
+		const response = await this.parseWiki(message);
+		if (this.typing) message.channel.stopTyping();
+
+		return response ? message.send(response) : undefined;
+	}
+
+	async parseWiki(message) {
 		const wiki = new Map(message.guild.settings.channelOverwrites).get(message.channel.id) || message.guild.settings.wiki;
 		const mps = ['**Wiki links detected:**'];
 		const cleaned = message.cleanContent.replace(this.constructor.codeBlock, '').replace(this.constructor.inlineCode, '').replace(this.constructor.cleanContent, '');
@@ -28,12 +37,10 @@ class WikiLinker extends Monitor {
 		if (this.constructor.template.test(cleaned)) this.templates(wiki, cleaned, mps);
 		if (this.constructor.rawArticle.test(cleaned)) this.rawArticles(wiki, cleaned, mps);
 
-		if (mps.length === 1) return;
+		if (mps.length === 1) return undefined;
 
 		const preparedSend = (await Promise.all(mps)).filter(item => item);
-
-		if (preparedSend.length > 1) return message.send(preparedSend);
-		return undefined;
+		return preparedSend.length > 1 ? preparedSend : undefined;
 	}
 
 	articles(wiki, cleaned, mps) {
