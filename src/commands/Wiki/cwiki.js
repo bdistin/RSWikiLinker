@@ -5,7 +5,7 @@ module.exports = class extends Command {
 	constructor(...args) {
 		super(...args, {
 			runIn: ['text'],
-			aliases: ['set-wiki'],
+			aliases: ['overwrite-wiki'],
 			cooldown: 30,
 			deletable: true,
 			guarded: true,
