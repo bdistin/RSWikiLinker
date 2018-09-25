@@ -16,7 +16,9 @@ module.exports = class extends Command {
 	}
 
 	async run(message, [wiki]) {
-		await message.guild.settings.update('channelOverwrites', [message.channel.id, wiki]);
+		const overwrites = new Map(message.guild.settings.channelOverwrites);
+		overwrites.set(message.channel.id, wiki);
+		await message.guild.settings.update('channelOverwrites', [...overwrites], { action: 'overwrite' });
 		return message.send(`The Wiki for this channel is now set to: ${wiki}`);
 	}
 
